@@ -1,16 +1,23 @@
+import { useDispatch, useSelector } from "react-redux";
+import { AppBar } from "./Appbar/Appbar";
+import { TodoList } from "./Todo-list/TodoList";
+import { todoSelector } from "redux/selectors/selectors";
+import { useEffect } from "react";
+import { fetchTodo } from "redux/operations/todoThunk";
+
 export const App = () => {
+  const todos = useSelector(todoSelector);
+  
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchTodo())
+  }, [dispatch])
+
   return (
-    <div
-      style={{
-        height: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        fontSize: 40,
-        color: '#010101'
-      }}
-    >
-      React homework template
+    <div>
+      <AppBar />
+      <TodoList todos={todos} />
     </div>
   );
 };
